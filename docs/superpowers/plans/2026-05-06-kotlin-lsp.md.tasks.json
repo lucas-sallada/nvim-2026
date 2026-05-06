@@ -4,22 +4,22 @@
     {
       "id": 7,
       "subject": "Task 1: Install Kotlin LSP server via Homebrew",
-      "status": "pending",
+      "status": "completed",
       "description": "**Goal:** Get `kotlin-lsp` binary on PATH so Neovim can spawn it.\n\n**Files:** None (host shell action only).\n\n**Acceptance Criteria:**\n- `which kotlin-lsp` resolves to a brew path\n- `kotlin-lsp --version` prints `LS-...`\n- `java -version` reports JDK 17+\n\n**Verify:** `which kotlin-lsp && kotlin-lsp --version && java -version 2>&1 | head -1`\n\n**Steps:**\n1. Verify JDK 17+ available\n2. `brew install JetBrains/utils/kotlin-lsp`\n3. Verify binary on PATH\n4. No commit (env-only change)\n\n```json:metadata\n{\"files\": [], \"verifyCommand\": \"which kotlin-lsp && kotlin-lsp --version && java -version 2>&1 | head -1\", \"acceptanceCriteria\": [\"kotlin-lsp resolves to brew path\", \"kotlin-lsp --version prints LS-* string\", \"java -version reports JDK 17+\"]}\n```"
     },
     {
       "id": 8,
       "subject": "Task 2: Wire kotlin_lsp into Neovim config",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [7],
       "description": "**Goal:** Enable LazyVim Kotlin extra, disable old `kotlin_language_server`, add `kotlin_lsp` with cmd override.\n\n**Files:**\n- Modify: `lazyvim.json`\n- Modify: `lua/plugins/lspconfig.lua`\n\n**Acceptance Criteria:**\n- `lazyvim.json` extras includes `lazyvim.plugins.extras.lang.kotlin`\n- `lspconfig.lua` opts has `servers.kotlin_language_server = false` and `servers.kotlin_lsp = { cmd = { \"kotlin-lsp\", \"--stdio\" } }`\n- `:LspInfo` on `.kt` buffer shows `kotlin_lsp` attached, no `kotlin_language_server`\n- treesitter `kotlin` parser installed\n\n**Verify:** Open `.kt` in Gradle project, `:LspInfo` and `:TSInstallInfo kotlin`\n\n**Steps:**\n1. Read current `lazyvim.json`\n2. Add `lazyvim.plugins.extras.lang.kotlin` to extras\n3. Read current `lua/plugins/lspconfig.lua`\n4. Add `servers` table override (disable old, add new with cmd)\n5. Run `nvim --headless \"+Lazy! sync\" +qa`\n6. Open Kotlin file, verify `:LspInfo`\n7. Sanity-check hover/goto/treesitter\n8. Commit\n\n```json:metadata\n{\"files\": [\"lazyvim.json\", \"lua/plugins/lspconfig.lua\"], \"verifyCommand\": \"nvim --headless \\\"+Lazy! sync\\\" +qa\", \"acceptanceCriteria\": [\"extras contains lang.kotlin\", \"servers.kotlin_language_server = false\", \"servers.kotlin_lsp cmd overridden to kotlin-lsp --stdio\", \"LspInfo shows kotlin_lsp attached\", \"kotlin_language_server NOT attached\"]}\n```"
     },
     {
       "id": 9,
       "subject": "Task 3: Document prerequisites in README",
-      "status": "pending",
+      "status": "completed",
       "description": "**Goal:** Document brew install + JDK 17+ + pre-alpha caveat in README.\n\n**Files:**\n- Modify: `README.md`\n\n**Acceptance Criteria:**\n- README has section naming brew command, JDK 17+, pre-alpha caveat\n- Section reachable from doc structure\n\n**Verify:** `grep -n \"kotlin-lsp\" README.md` shows the brew install line.\n\n**Steps:**\n1. Read current README, pick insertion point\n2. Append `## Kotlin LSP` section with brew cmd, JDK requirement, caveat\n3. Verify with grep\n4. Commit\n\n```json:metadata\n{\"files\": [\"README.md\"], \"verifyCommand\": \"grep -n 'kotlin-lsp' README.md\", \"acceptanceCriteria\": [\"README documents brew install\", \"README documents JDK 17+ requirement\", \"README notes pre-alpha caveat\"]}\n```"
     }
   ],
-  "lastUpdated": "2026-05-06"
+  "lastUpdated": "2026-05-06T00:00:03Z"
 }
