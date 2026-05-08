@@ -6,6 +6,7 @@ return {
       { "<leader>sf", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
     },
     opts = {
+      dashboard = { enabled = false },
       picker = {
         sources = {
           files = {
