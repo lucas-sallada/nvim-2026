@@ -10,6 +10,21 @@ return {
         kotlin_lsp = {
           cmd = { "kotlin-lsp", "--stdio" },
         },
+        -- Match the team's Ruff-only standard: basedpyright defaults to a strict
+        -- "recommended" preset that floods untyped deps with reportAny/unknown.
+        -- Dial it to "basic" and silence missing-stub noise.
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                typeCheckingMode = "basic",
+                diagnosticSeverityOverrides = {
+                  reportMissingTypeStubs = "none",
+                },
+              },
+            },
+          },
+        },
       },
     },
   },
